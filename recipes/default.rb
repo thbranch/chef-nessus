@@ -43,4 +43,5 @@ end
 # Activate Nessus subscription
 include_recipe "nessus::activate" if (node.nessus.enable && node.nessus.activate)
 
-# TODO: add create user recipe
+# Add users if vault is defined
+include_recipe "nessus::users" if (!node.nessus.vault_users_item.nil?)
