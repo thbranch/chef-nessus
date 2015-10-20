@@ -15,6 +15,8 @@ if node['nessus']['installer_file'].nil?
 
 else
 
+  rpm_package 'Nessus.rpm'
+
   installer_filename = Dir.glob(node.nessus.installer_file).first
 
   case File.extname(installer_filename)
