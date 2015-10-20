@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: nessus
-# Recipe:: adduser
+# Recipe:: users
 #
 # Copyright (C) 2015 dann s washko
 #

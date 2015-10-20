@@ -3,7 +3,7 @@
 require 'chefspec'
 require 'spec_helper'
 
-describe 'nessus::default' do
+describe 'nessus::users' do
   before do
     stub_command("/usr/sbin/httpd -t").and_return(true)
     stub_command("which sudo").and_return(true)
@@ -25,16 +25,8 @@ describe 'nessus::default' do
       end.converge(described_recipe)
     end
 
-    it 'it includes recipe _install-linux if platform is linux' do
-      expect(chef_run).to include_recipe('nessus::_install-linux')
-    end
-
-    it 'includes recipe register if register is true' do
-      expect(chef_run).to include_recipe('nessus::register')
-    end
-
-    it 'includes recipe users if create_user is true' do
-      expect(chef_run).to include_recipe('nessus::users')
+    it 'installs package expect' do
+      expect(chef_run).to install_package('expect')
     end
   end
 end

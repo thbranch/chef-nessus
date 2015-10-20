@@ -16,6 +16,7 @@ when 'security-center'
     command "#{nessuscli} fetch --security-center && touch /tmp/nessus_activated_by_chef"
   end
 when 'register'
+  package 'test'
   execute 'nessuscli-fetch' do
     command "#{nessuscli} fetch --register #{node['nessus']['register_serial']} && \
               #{nessuscli} update --plugins-only && \
