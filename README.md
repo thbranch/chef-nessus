@@ -59,6 +59,9 @@ Windows - coming soon
 
 </table>
 
+  For kitchen tests to work you either need to set two environmental variables: INSTALLER_FILE_URL and INSTALLER_FILE accordingly. These values need to point to where you have the Nessus package avaiable for the remote_file resource. For local testing upload the Nessus package to /home/vagrant and then 
+  - export INSTALLER_FILE_URL="file:///home/vagrant/Nessus.rpm"
+
 ## Usage
 
 ### nessus::default

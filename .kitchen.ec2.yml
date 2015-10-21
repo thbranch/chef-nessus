@@ -29,6 +29,8 @@ suites:
   - name: default
     data_bags_path: test/integration/data_bags
     run_list:
-      - recipe[gdp-base-linux]
       - recipe[nessus]
     attributes:
+      nessus:
+        installer_file_url: <%= ENV['INSTALLER_FILE_URL'] %>
+        installer_file: <%= ENV['INSTALLER_FILE'] %>
