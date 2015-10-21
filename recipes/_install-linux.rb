@@ -6,7 +6,6 @@
 #
 # All rights reserved - Do Not Redistribute
 #
-
 if node['nessus']['installer_file_url'].nil?
   package 'Nessus' do
     action :install
@@ -14,7 +13,7 @@ if node['nessus']['installer_file_url'].nil?
 else
   installer_filename = "/tmp/#{node['nessus']['installer_file']}"
   remote_file installer_filename do
-    source "#{node['nessus']['installer_file_url']}/#{node['installer_file']}"
+    source "#{node['nessus']['installer_file_url']}/#{node['nessus']['installer_file']}"
     owner 'root'
     group 'root'
     mode '0755'
