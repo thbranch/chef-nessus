@@ -12,7 +12,6 @@ driver:
   user_data: <%= ENV['USER_DATA_PATH'] %>
   tags:
     OWNER: <%= ENV['AWS_OWNER_TAG'] %>
-    Name: <%= ENV['AWS_NAME_TAG'] %>
 
 provisioner:
   name: chef_zero
