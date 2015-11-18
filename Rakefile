@@ -1,3 +1,5 @@
+gem 'rubocop', '0.33.0'
+
 require 'rspec/core/rake_task'
 require 'rubocop/rake_task'
 require 'foodcritic'
@@ -12,7 +14,7 @@ namespace :style do
   FoodCritic::Rake::LintTask.new(:chef) do |t|
     t.options = {
       fail_tags: ['any'],
-      tags: ['~FC005', '~FC003']
+      tags: ['~FC005']
     }
   end
 end
@@ -23,9 +25,6 @@ task style: ['style:chef', 'style:ruby']
 # Rspec and ChefSpec
 desc 'Run ChefSpec examples'
 RSpec::Core::RakeTask.new(:spec)
-
-desc 'Run all tests on Travis'
-task travis: ['style', 'spec']
 
 # Integration tests. Kitchen.ci
 namespace :integration do
