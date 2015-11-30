@@ -1,97 +1,86 @@
-nessus Cookbook
-===============
-This cookbook installs [Tenable Nessus](http://www.tenable.com/products/nessus)
-and does some initial setup. Currently it can enable the service and
-activate your feed subscription.
+# nessus-cookbook
 
-Requirements
-------------
+This cookbook installs and registers a Nessus scanner. It can also add users to the Nessus scanner.
 
-Tenable does not seem to offer direct download of the Nessus installer
-so currently we have to rely on it being somewhere on the filesystem.
-This can be accomplished with another cookbook, shared directory, etc.
+## Supported Platforms
 
-Attributes
-----------
+Linux
+  - Redhat Family (RHEL, Centos, Fedora, Scientific
+  - Debian Family (Debian, Ubuntu)
+  
+Windows - coming soon
 
- * installer_file - Where to find the installer file.
- * enable - Boolean - Whether to enable/start the service
- * activate - Boolean - Whether to activate the subscription
- * activation_code - String - Nessus Feed activation code
+## Attributes
 
-Usage
------
-#### nessus::default
+<table>
+  <tr>
+    <th>Key</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Default</th>
+  </tr>
+  <tr>
+    <td><tt>['nessus']['register']</tt></td>
+    <td>Boolean</td>
+    <td>register scanner.</td>
+    <td><tt>true</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['nessus']['create_user']</tt></td>
+    <td>Boolean</td>
+    <td>create user accounts with nessuscli.</td>
+    <td><tt>true</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['nessus']['installer_file_url']</tt></td>
+    <td>String</td>
+    <td>URL where the installer file can be found to pull down with remote_file resource.
+    Also determins whether to use a repository. Set to nil to use package repository.</td>
+    <td><tt>nil</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['nessus']['installer_file']</tt></td>
+    <td>String</td>
+    <td>Name of installation file.</td>
+    <td><tt>nil</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['nessus']['fetch_type']</tt></td>
+    <td>String</td>
+    <td>Method to register scanner using nessuscli fetch</td>
+    <td><tt>security-center</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['nessus']['user_databags']</tt></td>
+    <td>Array</td>
+    <td>Array of data bags files holding user information</td>
+    <td><tt>['agent', 'user']</tt></td>
+  </tr>
 
-Just include `nessus` in your node's `run_list` to install and start:
+</table>
+
+  For kitchen tests to work you either need to set two environmental variables: INSTALLER_FILE_URL and INSTALLER_FILE accordingly. These values need to point to where you have the Nessus package avaiable for the remote_file resource. For local testing upload the Nessus package to /home/vagrant and then 
+  - export INSTALLER_FILE_URL="file:///home/vagrant/Nessus.rpm"
+
+## Usage
+
+### nessus::default
+
+Include `nessus` in your node's `run_list`:
 
 ```json
 {
-  "name":"my_node",
   "run_list": [
-    "recipe[nessus]"
+    "recipe[nessus::default]"
   ]
 }
 ```
 
-To activate as well:
+## ToDo
 
-```json
-{
-  "name":"my_node",
-  "run_list": [
-    "recipe[nessus]"
-  ],
-  "default_attributes": {
-    "nessus":{
-      "installer_file":"/vagrant/installers/Nessus-*",
-      "activation_code":"FFFF-AAAA-BBBB-CCCC-DDDD"
-    }
-  }
-}
-```
+  - Move registration serial to data bag.
+  - Add windows installation support
 
-#### nessus::users
+## License and Authors
 
-Will automatically be included if you configure a `chef-vault` item
-with Nessus users.
-
-```json
-{
-  "name":"my_node",
-  "run_list": [
-    "recipe[nessus]"
-  ],
-  "default_attributes": {
-    "nessus":{
-      "installer_file":"/vagrant/installers/Nessus-*",
-      "activation_code":"FFFF-AAAA-BBBB-CCCC-DDDD"
-      "vault":"nessus",
-      "vault_users_item":"users"
-    }
-  }
-}
-```
-
-Creating the vault might look something like this:
-```
-bin/knife vault create nessus users \
- '{"bob":"thebuilder","diego":"theDESTROYER"}' \ 
- --search "role:some_role" \
- --admin some_guy
-```
-
-With each pair being `user:password`.
-
-Contributing
-------------
-1. Fork the repository on Github
-2. Create a named feature branch (like `add_component_x`)
-3. Write your change
-4. Write tests for your change (if applicable)
-5. Run the tests, ensuring they all pass
-6. Submit a Pull Request using Github
-
-License and Authors
--------------------
-Authors: Jason Rohwedder <jro@risk.io>
+Author:: Daniel Washko(<dwashko@gannett.com>)

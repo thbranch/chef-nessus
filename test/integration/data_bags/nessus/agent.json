@@ -1,0 +1,6 @@
+{
+  "id": "agent",
+  "login": "agent",
+  "password": "test",
+  "admin" : "y"
+}

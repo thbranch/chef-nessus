@@ -1,11 +1,8 @@
-nessus CHANGELOG
-================
-
-0.1.1
+0.2.0 
 -----
-- [Jason Rohwedder] - Add users through nessus::users
-
+- daniel washko - Reworked original Nessus cookbook recipes. Altered commands for adding users and registration. Implemented serverspec and chefspec testing. 
 
 0.1.0
 -----
-- [Jason Rohwedder] - Initial release of nessus
+
+- Initial release of nessus
